@@ -24,11 +24,11 @@ trie := NewTrie().
     Optimize(true).
     Build()
 
-trie.Find([]byte(textToSearch), func(result contains.SearchResult) {
+trie.Find(textToSearch, func(result contains.SearchResult) {
     // Do something useful with result
 })
 
-if trie.IsContainedStr(textToSearch) {
+if trie.IsContained(textToSearch) {
     // Atleast one of the words in our trie is present.
 }
 ```
