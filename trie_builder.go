@@ -37,12 +37,12 @@ func (tb *TrieBuilder) Optimize(optimize bool) *TrieBuilder {
 // Build returns build search trie
 func (tb *TrieBuilder) Build() *Trie {
 	var trie *Trie = &Trie{
-		Root:  newNode(),
-		Words: tb.words,
+		root:  newNode(),
+		words: tb.words,
 	}
 
 	//Build our trie
-	for indx, word := range trie.Words {
+	for indx, word := range trie.words {
 		insertWord(trie, word, indx)
 	}
 
@@ -54,7 +54,7 @@ func (tb *TrieBuilder) Build() *Trie {
 }
 
 func insertWord(trie *Trie, word string, indx int) {
-	currentNode := trie.Root
+	currentNode := trie.root
 	for _, char := range []byte(word) {
 		if node := currentNode.FindChild(char); node != nil {
 			currentNode = node
@@ -71,7 +71,7 @@ func insertWord(trie *Trie, word string, indx int) {
 // Calculates skipping, might take long time
 func (tb *TrieBuilder) optimizeSkiping(trie *Trie) {
 	// Calculate for regular words.
-	for _, word := range trie.Words {
+	for _, word := range trie.words {
 		calculateForWord(trie, word)
 	}
 }
@@ -117,7 +117,7 @@ func calculateForWord(trie *Trie, word string) {
 
 func lookup(trie *Trie, part []byte) (int, bool) {
 	matched := false
-	currentNode := trie.Root
+	currentNode := trie.root
 	i := 0
 	for ; i < len(part); i++ {
 		if node := currentNode.FindChild(part[i]); node != nil {
@@ -134,7 +134,7 @@ func lookup(trie *Trie, part []byte) (int, bool) {
 }
 
 func applySkips(trie *Trie, word []byte, skips []int) {
-	currentNode := trie.Root
+	currentNode := trie.root
 
 	for i := 0; i < len(word); i++ {
 		if node := currentNode.FindChild(word[i]); node != nil {

@@ -1,4 +1,4 @@
-module github.com/MartinKuzma/go-trie/v1
+module github.com/MartinKuzma/go-trie
 
 go 1.16
 

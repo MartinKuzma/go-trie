@@ -33,8 +33,20 @@ if trie.IsContained(textToSearch) {
 }
 ```
 
+# Benchmarks
+These results were achieved by using huge word database. Naive implementation uses `strings.Index` and `strings.Contains` functions. While the results represent huge performance win, we can easily find situations where naive implementation is much faster. 
+
+Always use measurements that fit your data and use-case.
+
+```
+BenchmarkNaiveFind-4         	      78	  13386731 ns/op	   81896 B/op	      12 allocs/op
+BenchmarkTrieFind-4          	    2245	    530640 ns/op	   81897 B/op	      12 allocs/op
+BenchmarkNaiveContained-4    	    4566	    248930 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTrieIsContained-4   	 4002381	       297.0 ns/op	       0 B/op	       0 allocs/op
+```
+
 # Future improvements
 - Improve performance of optimization algorithm 
 - Provide better examples and tests
-- Hide fields
 - Implement naive version for small-sized database
+  - Find out what constitues as a small database

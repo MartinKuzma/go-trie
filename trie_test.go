@@ -36,6 +36,12 @@ func TestTrieFind(t *testing.T) {
 
 }
 
+func BenchmarkNaiveFind(t *testing.B) {
+	for i := 0; i < t.N; i++ {
+		naiveImplementation(testSet)
+	}
+}
+
 func BenchmarkTrieFind(t *testing.B) {
 	trie := NewTrie().
 		WithWords(testSet...).
@@ -76,12 +82,6 @@ func naiveImplementation(searchedStrings []string) []SearchResult {
 	}
 
 	return results
-}
-
-func BenchmarkNaiveFind(t *testing.B) {
-	for i := 0; i < t.N; i++ {
-		naiveImplementation(testSet)
-	}
 }
 
 func BenchmarkNaiveContained(t *testing.B) {
