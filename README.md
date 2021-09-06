@@ -13,7 +13,7 @@ It is not suitable for use-cases with small dictionary (or single word searches)
 textToSearch :=  `Lorem ipsum ...`
 
 // Create optimized trie
-trie := contains.NewTrie().
+trie := NewTrie().
     WithWords(substrings...).
     Optimize(true).
     Build()

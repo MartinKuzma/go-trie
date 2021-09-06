@@ -1,4 +1,4 @@
-package contains_test
+package trie
 
 import (
 	"flag"
@@ -7,8 +7,6 @@ import (
 	"runtime/pprof"
 	"strings"
 	"testing"
-
-	"github.com/go-contains"
 )
 
 func TestBasicTrieBuilder(t *testing.T) {
@@ -24,16 +22,16 @@ func TestBasicTrieBuilder(t *testing.T) {
 	defer pprof.StopCPUProfile()
 	defer mem.Close()
 
-	trie := contains.NewTrie().
+	searchTrie := NewTrie().
 		WithWords(testSet...).
 		Optimize(true).
 		Build()
 
-	var results []contains.SearchResult
+	var results []SearchResult
 	benchmarkConvertes := []byte(benchmarkText)
 
 	for i := 0; i < 1000; i++ {
-		contains.Find(trie, benchmarkConvertes, func(result contains.SearchResult) {})
+		searchTrie.Find(benchmarkConvertes, func(result SearchResult) {})
 	}
 
 	t.Log(results)
@@ -44,7 +42,7 @@ func TestTrieFind(t *testing.T) {
 }
 
 func BenchmarkTrieFind(t *testing.B) {
-	trie := contains.NewTrie().
+	trie := NewTrie().
 		WithWords(testSet...).
 		Optimize(true).
 		Build()
@@ -52,15 +50,15 @@ func BenchmarkTrieFind(t *testing.B) {
 	benchmarkConvertes := []byte(benchmarkText)
 	t.ResetTimer()
 	for i := 0; i < t.N; i++ {
-		var results []contains.SearchResult
-		contains.Find(trie, benchmarkConvertes, func(result contains.SearchResult) {
+		var results []SearchResult
+		trie.Find(benchmarkConvertes, func(result SearchResult) {
 			results = append(results, result)
 		})
 	}
 }
 
-func naiveImplementation(searchedStrings []string) []contains.SearchResult {
-	var results []contains.SearchResult
+func naiveImplementation(searchedStrings []string) []SearchResult {
+	var results []SearchResult
 
 	for s := 0; s < len(searchedStrings); s++ {
 		index := -1
@@ -71,7 +69,7 @@ func naiveImplementation(searchedStrings []string) []contains.SearchResult {
 			offset += index
 
 			if index >= 0 {
-				results = append(results, contains.SearchResult{
+				results = append(results, SearchResult{
 					Word:     searchedStrings[s],
 					Position: offset,
 				})
@@ -103,7 +101,7 @@ func BenchmarkNaiveContains(t *testing.B) {
 }
 
 func BenchmarkTrieContains(t *testing.B) {
-	trie := contains.NewTrie().
+	trie := NewTrie().
 		WithWords(testSet...).
 		Optimize(true).
 		Build()

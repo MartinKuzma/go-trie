@@ -1,4 +1,4 @@
-package contains
+package trie
 
 import (
 	"encoding/json"
@@ -15,7 +15,7 @@ type SearchResult struct {
 }
 
 // Find searches for all occurences in Trie datastructure.
-func Find(trie *Trie, srcBytes []byte, f func(item SearchResult)) {
+func (trie *Trie) Find(srcBytes []byte, f func(item SearchResult)) {
 	length := len(srcBytes)
 
 	for startPosition := 0; startPosition < length; {

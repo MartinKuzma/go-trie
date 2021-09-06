@@ -1,4 +1,4 @@
-package contains
+package trie
 
 type TrieBuilder struct {
 	words    []string
