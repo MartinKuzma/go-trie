@@ -2,7 +2,7 @@
 Go-Trie is small library implementing trie datastructure with additional skipping optimization. It tries to build skipping indexes in nodes to avoid unnecessary checks. 
 It is not suitable for use-cases with small dictionary (or single word searches). Naive implementations might be much better in those cases! **Always measure!**
 
-### Features and implementation decisions:
+### Features and implementation decisions
 - Case sensitive.
 - Functions: `Contains`, `Find`
 - Trie can be exported into JSON format and parsed from it, thus saving us from building and optimization steps.
@@ -15,15 +15,15 @@ textToSearch :=  `Lorem ipsum ...`
 // Create optimized trie
 trie := contains.NewTrie().
     WithWords(substrings...).
-	Optimize(true).
-	Build()
+    Optimize(true).
+    Build()
 
 trie.Find([]byte(textToSearch), func(result contains.SearchResult) {
     // Do something useful with result
 })
 ```
 
-Future improvements:
+### Future improvements
 - Improve performance of optimization algorithm 
 - Provide better examples
 - Hide fields
