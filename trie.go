@@ -2,6 +2,8 @@ package trie
 
 import (
 	"encoding/json"
+
+	"github.com/juju/errors"
 )
 
 type Trie struct {
@@ -15,13 +17,13 @@ type SearchResult struct {
 }
 
 // Find searches for all occurences in Trie datastructure.
-func (trie *Trie) Find(srcBytes []byte, f func(item SearchResult)) {
-	length := len(srcBytes)
+func (trie *Trie) Find(text string, f func(item SearchResult)) {
+	length := len(text)
 
 	for startPosition := 0; startPosition < length; {
 		var lastVisited *Node = trie.Root
 		for indx := startPosition; indx < length; indx += 1 {
-			if node := lastVisited.LookupChild(srcBytes[indx]); node != nil {
+			if node := lastVisited.FindChild(text[indx]); node != nil {
 				if node.Word != -1 {
 					f(SearchResult{
 						Word:     trie.Words[node.Word],
@@ -38,14 +40,14 @@ func (trie *Trie) Find(srcBytes []byte, f func(item SearchResult)) {
 	}
 }
 
-// Contains searches for first occurence of any word in Trie datastructure.
-func (trie *Trie) Contains(srcBytes []byte) bool {
-	length := len(srcBytes)
+// IsContained searches for first occurence of any word in Trie datastructure.
+func (trie *Trie) IsContained(text string) bool {
+	length := len(text)
 
 	for startPosition := 0; startPosition < length; {
 		var lastVisited *Node = trie.Root
 		for indx := startPosition; indx < length; indx += 1 {
-			if node := lastVisited.LookupChild(srcBytes[indx]); node != nil {
+			if node := lastVisited.FindChild(text[indx]); node != nil {
 				if node.Word != -1 {
 					return true
 				}
@@ -67,5 +69,5 @@ func (trie *Trie) ToJson() ([]byte, error) {
 func FromJson(data []byte) (*Trie, error) {
 	trie := &Trie{}
 	err := json.Unmarshal(data, &Trie{})
-	return trie, err
+	return trie, errors.Annotate(err, "Error while parsing Trie datastrcture from json")
 }

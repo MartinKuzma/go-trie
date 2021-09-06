@@ -27,14 +27,9 @@ func TestBasicTrieBuilder(t *testing.T) {
 		Optimize(true).
 		Build()
 
-	var results []SearchResult
-	benchmarkConvertes := []byte(benchmarkText)
-
 	for i := 0; i < 1000; i++ {
-		searchTrie.Find(benchmarkConvertes, func(result SearchResult) {})
+		searchTrie.Find(benchmarkText, func(result SearchResult) {})
 	}
-
-	t.Log(results)
 }
 
 func TestTrieFind(t *testing.T) {
@@ -47,11 +42,10 @@ func BenchmarkTrieFind(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	benchmarkConvertes := []byte(benchmarkText)
 	t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		var results []SearchResult
-		trie.Find(benchmarkConvertes, func(result SearchResult) {
+		trie.Find(benchmarkText, func(result SearchResult) {
 			results = append(results, result)
 		})
 	}
@@ -90,7 +84,7 @@ func BenchmarkNaiveFind(t *testing.B) {
 	}
 }
 
-func BenchmarkNaiveContains(t *testing.B) {
+func BenchmarkNaiveContained(t *testing.B) {
 	for i := 0; i < t.N; i++ {
 		for s := 0; s < len(testSet); s++ {
 			if strings.Contains(benchmarkText, testSet[s]) {
@@ -100,16 +94,15 @@ func BenchmarkNaiveContains(t *testing.B) {
 	}
 }
 
-func BenchmarkTrieContains(t *testing.B) {
+func BenchmarkTrieIsContained(t *testing.B) {
 	trie := NewTrie().
 		WithWords(testSet...).
 		Optimize(true).
 		Build()
 
-	benchmarkConvertes := []byte(benchmarkText)
 	t.ResetTimer()
 	for i := 0; i < t.N; i++ {
-		trie.Contains(benchmarkConvertes)
+		trie.IsContained(benchmarkText)
 
 	}
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type Node struct {
-	Key      byte // Key of this node
+	Key      byte // Key/Character this node represents
 	Word     int  // index of word
 	Skip     int  // characters to skip
 	Children []*Node
@@ -22,7 +22,7 @@ func newNode() *Node {
 	}
 }
 
-func NewKeyNode(key byte) *Node {
+func newKeyNode(key byte) *Node {
 	return &Node{
 		Word: -1,
 		Skip: 1,
@@ -31,7 +31,7 @@ func NewKeyNode(key byte) *Node {
 }
 
 func (n *Node) AddChild(char byte) *Node {
-	child := NewKeyNode(char)
+	child := newKeyNode(char)
 	n.Children = append(n.Children, child)
 
 	if len(n.Children) > sortThreshold {
@@ -43,7 +43,7 @@ func (n *Node) AddChild(char byte) *Node {
 	return child
 }
 
-func (n *Node) LookupChild(char byte) *Node {
+func (n *Node) FindChild(char byte) *Node {
 	childrenCount := len(n.Children)
 
 	if childrenCount <= sortThreshold {

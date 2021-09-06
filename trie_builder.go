@@ -56,7 +56,7 @@ func (tb *TrieBuilder) Build() *Trie {
 func insertWord(trie *Trie, word string, indx int) {
 	currentNode := trie.Root
 	for _, char := range []byte(word) {
-		if node := currentNode.LookupChild(char); node != nil {
+		if node := currentNode.FindChild(char); node != nil {
 			currentNode = node
 		} else {
 			// Missing node, create one and add it to children.
@@ -120,7 +120,7 @@ func lookup(trie *Trie, part []byte) (int, bool) {
 	currentNode := trie.Root
 	i := 0
 	for ; i < len(part); i++ {
-		if node := currentNode.LookupChild(part[i]); node != nil {
+		if node := currentNode.FindChild(part[i]); node != nil {
 			if node.Word != -1 {
 				matched = true
 			}
@@ -137,7 +137,7 @@ func applySkips(trie *Trie, word []byte, skips []int) {
 	currentNode := trie.Root
 
 	for i := 0; i < len(word); i++ {
-		if node := currentNode.LookupChild(word[i]); node != nil {
+		if node := currentNode.FindChild(word[i]); node != nil {
 			node.Skip = skips[i]
 			currentNode = node
 		} else {
