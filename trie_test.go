@@ -1,24 +1,13 @@
 package trie
 
 import (
-	"log"
-	"os"
-	"runtime/pprof"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBasicTrieBuilder(t *testing.T) {
-	f, err := os.Create("cpuprofile")
-	mem, err := os.Create("memprofile")
-	if err != nil {
-		log.Fatal(err)
-	}
-	pprof.StartCPUProfile(f)
-
-	defer pprof.StopCPUProfile()
-	defer mem.Close()
-
 	searchTrie := NewTrie().
 		WithWords(testSet...).
 		Optimize(true).
@@ -31,6 +20,50 @@ func TestBasicTrieBuilder(t *testing.T) {
 
 func TestTrieFind(t *testing.T) {
 
+	testText := `func TestTrieFind(t *testing.T) {
+		testText := ''
+	}
+	
+	trie := NewTrie().
+		WithWords(testSet...).
+		Optimize(true).
+		Build()
+
+	var results []SearchResult
+	trie.Find(testText, func(result trie.SearchResult) {
+		results = append(results, result)
+	})
+	`
+
+	trie := NewTrie().
+		WithWords(goKeyWords...).
+		Optimize(true).
+		Build()
+
+	var results []SearchResult
+	trie.Find(testText, func(result SearchResult) {
+		results = append(results, result)
+	})
+
+	expectedResults := []SearchResult{
+		{
+			Word:     "func",
+			Position: 0,
+		},
+		{
+			Word:     "var",
+			Position: 131,
+		},
+		{
+			Word:     "func",
+			Position: 179,
+		},
+	}
+
+	for i, expexpectedResult := range expectedResults {
+		assert.Equal(t, expexpectedResult.Word, results[i].Word)
+		assert.Equal(t, expexpectedResult.Position, results[i].Position)
+	}
 }
 
 func BenchmarkNaiveFind(t *testing.B) {
@@ -45,7 +78,7 @@ func BenchmarkTrieFind(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	//t.ResetTimer()
+	t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		var results []SearchResult
 		trie.Find(benchmarkText, func(result SearchResult) {
@@ -97,7 +130,7 @@ func BenchmarkTrieIsContained(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	//t.ResetTimer()
+	t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		trie.IsContained(benchmarkText)
 	}
