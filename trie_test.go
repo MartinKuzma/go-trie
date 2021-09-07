@@ -78,7 +78,7 @@ func BenchmarkTrieFind(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	t.ResetTimer()
+	//t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		var results []SearchResult
 		trie.Find(benchmarkText, func(result SearchResult) {
@@ -130,7 +130,7 @@ func BenchmarkTrieIsContained(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	t.ResetTimer()
+	//t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		trie.IsContained(benchmarkText)
 	}

@@ -42,20 +42,20 @@ Always use measurements that fit your data and use-case.
 Trie creation and optimization included
 ```
 cpu: Intel(R) Core(TM) i5-4690K CPU @ 3.50GHz
-BenchmarkNaiveFind-4         	      78	  13229589 ns/op	   81896 B/op	      12 allocs/op
-BenchmarkTrieFind-4          	    2264	    518443 ns/op	   82286 B/op	      21 allocs/op
-BenchmarkNaiveContained-4    	    4615	    248792 ns/op	       0 B/op	       0 allocs/op
-BenchmarkTrieIsContained-4   	 3948870	       299.8 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNaiveFind-4         	      90	  13292769 ns/op	   81896 B/op	      12 allocs/op
+BenchmarkTrieFind-4          	    2292	    504501 ns/op	   82282 B/op	      20 allocs/op
+BenchmarkNaiveContained-4    	    4428	    250002 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTrieIsContained-4   	 6020218	       201.2 ns/op	       0 B/op	       0 allocs/op
 ```
 
 
 Trie creation and optimization not included
 ```
 cpu: Intel(R) Core(TM) i5-4690K CPU @ 3.50GHz
-BenchmarkNaiveFind-4         	      78	  13386731 ns/op	   81896 B/op	      12 allocs/op
-BenchmarkTrieFind-4          	    2245	    530640 ns/op	   81897 B/op	      12 allocs/op
-BenchmarkNaiveContained-4    	    4566	    248930 ns/op	       0 B/op	       0 allocs/op
-BenchmarkTrieIsContained-4   	 4002381	       297.0 ns/op	       0 B/op	       0 allocs/op
+BenchmarkNaiveFind-4         	      82	  13285727 ns/op	   81896 B/op	      12 allocs/op
+BenchmarkTrieFind-4          	    2392	    514459 ns/op	   81896 B/op	      12 allocs/op
+BenchmarkNaiveContained-4    	    4500	    249894 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTrieIsContained-4   	 6042928	       198.6 ns/op	       0 B/op	       0 allocs/op
 ```
 
 # Future improvements
