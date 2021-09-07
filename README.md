@@ -4,7 +4,7 @@ It is not suitable for use-cases with small dictionary (or single word searches)
 
 # Installation
 ```go
-import "github.com/MartinKuzma/go-trie/v1"
+import "github.com/MartinKuzma/go-trie"
 ```
 
 # Features and decisions
