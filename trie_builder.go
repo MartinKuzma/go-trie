@@ -90,8 +90,9 @@ func calculateForWord(trie *Trie, word string) {
 		for i := 1; i < j-1; i += 1 {
 			sliceLength := j - i
 			matchedBytes, matched := lookup(trie, charBytes[i:j])
+			// When matched is true: we found submatch along the way.
+			// When matchedBytes == sliceLength, but matched is false: we can safely say that there is another word depeper in tree
 			if matched || matchedBytes == sliceLength {
-				// We found submatch along the way.
 				// Skip by our current offset
 				charactersToSkip = i
 				break

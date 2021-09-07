@@ -1,7 +1,6 @@
 package trie
 
 import (
-	"flag"
 	"log"
 	"os"
 	"runtime/pprof"
@@ -10,8 +9,6 @@ import (
 )
 
 func TestBasicTrieBuilder(t *testing.T) {
-	flag.Parse()
-
 	f, err := os.Create("cpuprofile")
 	mem, err := os.Create("memprofile")
 	if err != nil {
@@ -48,7 +45,7 @@ func BenchmarkTrieFind(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	t.ResetTimer()
+	//t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		var results []SearchResult
 		trie.Find(benchmarkText, func(result SearchResult) {
@@ -100,10 +97,9 @@ func BenchmarkTrieIsContained(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	t.ResetTimer()
+	//t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		trie.IsContained(benchmarkText)
-
 	}
 }
 
@@ -1473,7 +1469,6 @@ var testSet []string = []string{
 	"identification",
 	"identify",
 	"identity",
-	"ie",
 	"if",
 	"ignore",
 	"ill",
