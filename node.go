@@ -49,22 +49,10 @@ func (n *Node) FindChild(char byte) *Node {
 		return nil
 	}
 
-	// Using full binary search yields worse results
-	return semiBinarySearch(n, char, childrenCount)
+	return binarySearch(n, char, childrenCount)
 }
 
-func linearSearch(n *Node, key byte, from int, to int) *Node {
-	for ; from < to; from += 1 {
-		node := n.Children[from]
-		if node.Key == key {
-			return node
-		}
-	}
-
-	return nil
-}
-
-func semiBinarySearch(n *Node, key byte, childrenCount int) *Node {
+func binarySearch(n *Node, key byte, childrenCount int) *Node {
 	var start int = 0
 	var end int = childrenCount
 	for start < end {
@@ -80,4 +68,7 @@ func semiBinarySearch(n *Node, key byte, childrenCount int) *Node {
 	}
 
 	return nil
+}
+func (n *Node) HasWord() bool {
+	return n.Word != -1
 }

@@ -7,16 +7,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBasicTrieBuilder(t *testing.T) {
-	searchTrie := NewTrie().
-		WithWords(testSet...).
-		Optimize(true).
-		Build()
+// func TestBasicTrieBuilder(t *testing.T) {
+// 	searchTrie := NewTrie().
+// 		WithWords(testSet...).
+// 		Optimize(true).
+// 		Build()
 
-	for i := 0; i < 1000; i++ {
-		searchTrie.Find(benchmarkText, func(result SearchResult) {})
-	}
-}
+// 	for i := 0; i < 1000; i++ {
+// 		searchTrie.Find(benchmarkText, func(result SearchResult) {})
+// 	}
+// }
 
 func TestTrieFind(t *testing.T) {
 
@@ -66,6 +66,25 @@ func TestTrieFind(t *testing.T) {
 	}
 }
 
+func TestSortedWordsWithPrefix(t *testing.T) {
+	trie := NewTrie().
+		AddWord("Gulible").
+		AddWord("zebra").
+		AddWord("likes").
+		AddWord("green").
+		AddWord("grass").
+		Optimize(false).
+		Build()
+
+	sortedWords := trie.SortedWords()
+
+	assert.Equal(t, []string{"Gulible", "grass", "green", "likes", "zebra"}, sortedWords)
+	assert.Equal(t, []string{"grass", "green"}, trie.WordsWithPrefix("gr"))
+}
+
+func TestWithPrefix(t *testing.T) {
+}
+
 func BenchmarkNaiveFind(t *testing.B) {
 	for i := 0; i < t.N; i++ {
 		naiveImplementation(testSet)
@@ -78,7 +97,7 @@ func BenchmarkTrieFind(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	//t.ResetTimer()
+	t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		var results []SearchResult
 		trie.Find(benchmarkText, func(result SearchResult) {
@@ -130,7 +149,7 @@ func BenchmarkTrieIsContained(t *testing.B) {
 		Optimize(true).
 		Build()
 
-	//t.ResetTimer()
+	t.ResetTimer()
 	for i := 0; i < t.N; i++ {
 		trie.IsContained(benchmarkText)
 	}

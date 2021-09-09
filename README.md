@@ -9,9 +9,9 @@ import "github.com/MartinKuzma/go-trie"
 
 # Features and decisions
 - Case sensitive.
-- Functions: `Contains`, `Find`
+- Functions: `Contains`, `Find`, `HasPrefix`, `WordsWithPrefix`, `SortedWords`, `FromJson`, `ToJson`
 - Trie can be exported into JSON format and parsed from it, thus saving us from building and optimization steps.
-- Nodes in trie are not saved in map due to performance reasons, however binary search might be performed when node has many children (>128).
+- Nodes in trie are not saved in map due to performance reasons, binary search is performed instead.
 - Designed to be immutable after it has been created. This ensures thread-safety and less complexity.
 
 # Examples
@@ -39,7 +39,7 @@ These results were achieved by using database with 3000 words. Naive implementat
 
 Always use measurements that fit your data and use-case.
 
-Trie creation and optimization included
+Trie initialization included
 ```
 cpu: Intel(R) Core(TM) i5-4690K CPU @ 3.50GHz
 BenchmarkNaiveFind-4         	      90	  13292769 ns/op	   81896 B/op	      12 allocs/op
@@ -48,8 +48,7 @@ BenchmarkNaiveContained-4    	    4428	    250002 ns/op	       0 B/op	       0 a
 BenchmarkTrieIsContained-4   	 6020218	       201.2 ns/op	       0 B/op	       0 allocs/op
 ```
 
-
-Trie creation and optimization not included
+Trie initialization not included
 ```
 cpu: Intel(R) Core(TM) i5-4690K CPU @ 3.50GHz
 BenchmarkNaiveFind-4         	      82	  13285727 ns/op	   81896 B/op	      12 allocs/op
@@ -63,3 +62,4 @@ BenchmarkTrieIsContained-4   	 6042928	       198.6 ns/op	       0 B/op	       0
 - Provide better examples and tests
 - Implement naive version for small-sized database
   - Find out what constitues as a small database
+- Find out good hashing function for searching children
