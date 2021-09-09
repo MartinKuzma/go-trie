@@ -7,17 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// func TestBasicTrieBuilder(t *testing.T) {
-// 	searchTrie := NewTrie().
-// 		WithWords(testSet...).
-// 		Optimize(true).
-// 		Build()
-
-// 	for i := 0; i < 1000; i++ {
-// 		searchTrie.Find(benchmarkText, func(result SearchResult) {})
-// 	}
-// }
-
 func TestTrieFind(t *testing.T) {
 
 	testText := `func TestTrieFind(t *testing.T) {
@@ -80,9 +69,6 @@ func TestSortedWordsWithPrefix(t *testing.T) {
 
 	assert.Equal(t, []string{"Gulible", "grass", "green", "likes", "zebra"}, sortedWords)
 	assert.Equal(t, []string{"grass", "green"}, trie.WordsWithPrefix("gr"))
-}
-
-func TestWithPrefix(t *testing.T) {
 }
 
 func BenchmarkNaiveFind(t *testing.B) {
