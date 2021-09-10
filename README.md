@@ -1,5 +1,6 @@
 # go-trie
-Go-Trie is small library implementing trie datastructure with additional skipping optimization. It tries to build skipping indexes in nodes to avoid unnecessary checks. 
+Go-Trie is small library implementing trie datastructure for searching large quantities of strings in text with additional skipping optimization. It extracts information about words similar to KMP algorithm. This information is then used to determine how many characters we can skip ahead.
+
 It is not suitable for use-cases with small dictionary (or single word searches). Naive implementations might be much better in those cases! **Always measure!**
 
 # Installation
